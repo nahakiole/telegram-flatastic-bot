@@ -2,6 +2,10 @@
 
 A flatastic telegram bot that shows the tasks and things on the shopping list in a telegram chat.
 
+## How to get started
+- Create .env file with a BOT_TOKEN and FLATASTIC_TOKEN environment variable.
+- Run ```node bot.js```
+
 ## Planned features:
 - Regular messages without prompting the bot (Ex. Always on Sunday)
 - Remind people of overdue tasks
