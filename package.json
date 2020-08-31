@@ -4,6 +4,7 @@
   "description": "A telegram bot for flatastic",
   "main": "bot.js",
   "dependencies": {
+    "dotenv": "^8.2.0",
     "nodemon": "^2.0.4",
     "request": "^2.88.2",
     "telegraf": "^3.38.0"

@@ -2,6 +2,8 @@ const {Telegraf} = require('telegraf')
 
 const {Flatastic} = require('./flatastic.js')
 
+require('dotenv').config()
+
 let flatastic = new Flatastic(process.env.FLATASTIC_TOKEN)
 
 const bot = new Telegraf(process.env.BOT_TOKEN)
