@@ -4,6 +4,9 @@ const {Flatastic} = require('./flatastic.js')
 
 require('dotenv').config()
 
+var pjson = require('./package.json');
+
+
 let flatastic = new Flatastic(process.env.FLATASTIC_TOKEN)
 
 const bot = new Telegraf(process.env.BOT_TOKEN)
@@ -19,6 +22,10 @@ flatastic.getInformation(function (data) {
 
 })
 
+
+bot.hears(/version/i, (ctx) => {
+    ctx.replyWithHTML( pjson.version);
+})
 
 bot.hears(/einkaufsliste|ichoufe|einkaufen|kaufen|shopping/i, (ctx) => {
     flatastic.getShoppingList(function (data) {
