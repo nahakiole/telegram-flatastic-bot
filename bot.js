@@ -24,7 +24,7 @@ flatastic.getInformation(function (data) {
 
 
 bot.hears(/version/i, (ctx) => {
-    ctx.replyWithHTML( pjson.version);
+    ctx.replyWithHTML( "Ich bin auf Version "+pjson.version);
 })
 
 bot.hears(/einkaufsliste|ichoufe|einkaufen|kaufen|shopping/i, (ctx) => {
