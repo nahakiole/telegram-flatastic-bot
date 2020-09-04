@@ -54,7 +54,7 @@ bot.hears(/einkaufsliste|ichoufe|einkaufen|kaufen|shopping/i, (ctx) => {
 });
 
 
-bot.hears(/task|aufgabe|ämtli/i, (ctx) => {
+bot.hears(/task|aufgabe|ämtli|ufgabe/i, (ctx) => {
 
     flatastic.getTaskList(function (data) {
         var tasks = "";
