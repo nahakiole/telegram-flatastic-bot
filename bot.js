@@ -11,7 +11,7 @@ let flatastic = new Flatastic(process.env.FLATASTIC_TOKEN)
 
 const bot = new Telegraf(process.env.BOT_TOKEN)
 bot.start((ctx) => ctx.reply('Welcome!'))
-bot.help((ctx) => ctx.reply('Send me a sticker'))
+bot.help((ctx) => ctx.reply('Frag mich welche Tasks offen sind 😉'))
 
 let users = {}
 flatastic.getInformation(function (data) {
