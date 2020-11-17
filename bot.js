@@ -5,6 +5,9 @@ const LocalSession = require('telegraf-session-local')
 
 require('dotenv').config()
 
+var pjson = require('./package.json');
+
+
 let flatastic = new Flatastic(process.env.FLATASTIC_TOKEN)
 
 const bot = new Telegraf(process.env.BOT_TOKEN)
@@ -12,7 +15,7 @@ const bot = new Telegraf(process.env.BOT_TOKEN)
 bot.use((new LocalSession({database: 'example_db.json'})).middleware())
 
 bot.start((ctx) => ctx.reply('Welcome!'))
-bot.help((ctx) => ctx.reply('Send me a sticker'))
+bot.help((ctx) => ctx.reply('Frag mich welche Tasks offen sind 😉'))
 
 let users = {}
 flatastic.getInformation(function (data) {
@@ -90,6 +93,10 @@ cron.schedule('0 12 * * *', () => {
     })
 });
 
+bot.hears(/version/i, (ctx) => {
+    ctx.replyWithHTML( "Ich bin auf Version "+pjson.version);
+})
+
 bot.hears(/einkaufsliste|ichoufe|einkaufen|kaufen|shopping/i, (ctx) => {
     console.dir(ctx.update.message.chat)
     flatastic.getShoppingList(function (data) {
@@ -123,7 +130,7 @@ bot.hears(/counter/i, (ctx, next) => {
     return next()
 })
 
-bot.hears(/task|aufgabe|ämtli/i, (ctx) => {
+bot.hears(/task|aufgabe|ämtli|ufgabe/i, (ctx) => {
 
     flatastic.getTaskList(function (data) {
         var tasks = "";
