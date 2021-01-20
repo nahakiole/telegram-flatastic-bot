@@ -15,7 +15,7 @@ const bot = new Telegraf(process.env.BOT_TOKEN)
 bot.use((new LocalSession({database: 'example_db.json'})).middleware())
 
 bot.start((ctx) => ctx.reply('Welcome!'))
-bot.help((ctx) => ctx.reply('Frag mich welche Tasks offen sind 😉'))
+bot.help((ctx) => ctx.reply('Frag mich welche Tasks offen sind'))
 
 let users = {}
 flatastic.getInformation(function (data) {
@@ -27,7 +27,7 @@ flatastic.getInformation(function (data) {
 
 var cron = require('node-cron');
 
-cron.schedule('00 15 * * *', () => {
+cron.schedule('0 9 * * *', () => {
 
     flatastic.getTaskList(function (data) {
         var tasks = "";
@@ -43,9 +43,7 @@ cron.schedule('00 15 * * *', () => {
         for (const dataKey in data) {
             let task = data[dataKey];
 
-            if (task.currentUser !== lastUser) {
-                tasks += "\n<b>" + users[task.currentUser].firstName + "</b>\n";
-            }
+
 
             var daysUntilTask = (task.timeLeftNext / 60 / 60 / 24);
             var passed = 'heute';
@@ -55,6 +53,14 @@ cron.schedule('00 15 * * *', () => {
             if (daysUntilTask > 1) {
                 continue;
             }
+            if (task.rotationTime === -1){
+                continue;
+            }
+            if (task.currentUser !== lastUser) {
+                tasks += "\n<b>" + users[task.currentUser].firstName + "</b>\n";
+            }
+
+
             tasks += task.title + " "
             tasks += passed + " fällig\n";
 
@@ -69,7 +75,7 @@ cron.schedule('00 15 * * *', () => {
 
 })
 
-cron.schedule('0 12 * * *', () => {
+cron.schedule('15 12 * * *', () => {
     flatastic.getShoppingList(function (data) {
         var output = "";
         data = data.filter(function (a) {
@@ -85,7 +91,7 @@ cron.schedule('0 12 * * *', () => {
                     continue;
                 }
 
-                output += item.itemName + " hinzugefügt von " + users[item.inserterId].firstName + "\n"
+                output += item.itemName
             }
             bot.telegram.sendMessage(process.env.TELEGRAM_GROUP, output)
         }
@@ -94,10 +100,11 @@ cron.schedule('0 12 * * *', () => {
 });
 
 bot.hears(/version/i, (ctx) => {
+    console.dir(ctx.update)
     ctx.replyWithHTML( "Ich bin auf Version "+pjson.version);
 })
 
-bot.hears(/einkaufsliste|ichoufe|einkaufen|kaufen|shopping/i, (ctx) => {
+bot.hears(/showshopping/i, (ctx) => {
     console.dir(ctx.update.message.chat)
     flatastic.getShoppingList(function (data) {
         var output = "";
@@ -115,7 +122,7 @@ bot.hears(/einkaufsliste|ichoufe|einkaufen|kaufen|shopping/i, (ctx) => {
                     continue;
                 }
 
-                output += item.itemName + " hinzugefügt von " + users[item.inserterId].firstName + "\n"
+                output += item.itemName
             }
         }
 
@@ -130,7 +137,7 @@ bot.hears(/counter/i, (ctx, next) => {
     return next()
 })
 
-bot.hears(/task|aufgabe|ämtli|ufgabe/i, (ctx) => {
+bot.hears(/showtasks/i, (ctx) => {
 
     flatastic.getTaskList(function (data) {
         var tasks = "";
@@ -153,6 +160,8 @@ bot.hears(/task|aufgabe|ämtli|ufgabe/i, (ctx) => {
             tasks += task.title + " "
 
             var daysUntilTask = (task.timeLeftNext / 60 / 60 / 24);
+
+
             var passed = 'heute';
             if (daysUntilTask < 0) {
                 passed = "vor " + Math.ceil(Math.abs(daysUntilTask)) + " Tag/en"
@@ -161,7 +170,12 @@ bot.hears(/task|aufgabe|ämtli|ufgabe/i, (ctx) => {
                 passed = "in " + Math.ceil(Math.abs(daysUntilTask)) + " Tag/en"
             }
 
-            tasks += passed + " fällig\n";
+            passed = passed + " fällig\n";
+            if (task.rotationTime === -1){
+                passed = "\n"
+            }
+
+            tasks += passed
 
             lastUser = task.currentUser;
         }
