@@ -1,6 +1,6 @@
 {
   "name": "telegram-flatastic-bot",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "A telegram bot for flatastic",
   "main": "bot.js",
   "dependencies": {

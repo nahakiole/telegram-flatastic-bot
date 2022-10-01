@@ -210,15 +210,95 @@ bot.hears(/version/i, (ctx) => {
     ctx.replyWithHTML("Ich bin auf Version " + pjson.version);
 })
 
-bot.hears(/meme/i, async (ctx) => {
-    await imgflip.meme(`80707627`, {
+let memes = [
+    [`61539`, {
+        captions: [
+            `We ir wg`,
+            `D chuchi nid ufgrumt isch`
+        ],
+        path: `./memes/chuchi.png`
+    }],
+    [`285870`, {
+        captions: [
+            `We ds badezimmer putzt isch`,
+            `We ds badezimmer nid putzt isch`
+        ],
+        path: `./memes/badezimmer.png`
+    }],
+    [`131087935`, {
+        captions: [
+            `Ig`,
+            `E ufgruhmti wg`,
+            `Mini ämtli`,
+            `Ig`,
+            `E ufgruhmti wg`,
+        ],
+        path: `./memes/ufgruhmti.png`
+    }], 
+    [`222403160`, {
+        captions: [
+            ``,
+            `you to do your tasks`,
+        ],
+        path: `./memes/bernie.png`
+    }],
+    [`93895088`, {
+        captions: [
+            `I mache mini ämtli nid`,
+            `I mache mini ämtli`,
+            `I mache mini ämtli wül i e suberi wg wott`,
+            `I mache mini ämtli wül i mini mitbewohner gärn ha`,
+        ],
+        path: `./memes/mitbewohner.png`
+    }],
+    [`195515965`, {
+        captions: [
+            `I zieh ine ufgrumti wg`,
+            `I mache mini ämtli nid`,
+            'D wg wird unordentlich',
+            `D wg isch jitz unordentlich`,
+        ],
+        path: `./memes/unordentlich.png`
+    }],
+    [`27813981`, {
+        captions: [
+            `Wed iz flatastic luegsch`,
+            `Us ämtli git wo überfällig si`,
+        ],
+        path: `./memes/harold.png`
+    }],
+    [`129242436`, {
+        captions: [
+            `Du sötisch dini ämtli vor em ablaufdatum mache!`,
+        ],
+        path: `./memes/change.png`
+    }],
+    [`89370399`, {
+        captions: [
+            `Wed dis ämtli machsch, de mache di anderä ihres o.`,
+        ],
+        path: `./memes/anderä.png`
+    }],
+    [`80707627`, {
         captions: [
             `We di anderä ihres ämtli nid mache.`,
         ],
-        path: `memes/anderä.png`
-    })
+        path: `./memes/anderä3.png`
+    }],
+    [`1202623`, {
+        captions: [
+            `Keep calm and do your tasks`,
+        ],
+        path: `./memes/anderä4.png`
+    }],
+]
 
-    ctx.replyWithPhoto({source: fs.readFileSync('memes/anderä.png')})
+
+bot.hears(/meme/i, async (ctx) => {
+    let meme = memes[Math.floor(Math.random() * memes.length)];
+    await imgflip.meme.call(imgflip, ...meme)
+
+    ctx.replyWithPhoto({source: fs.readFileSync(meme[1].path)}, )
 })
 
 
