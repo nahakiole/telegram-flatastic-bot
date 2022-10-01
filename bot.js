@@ -262,12 +262,6 @@ function showShoppingList() {
     })
 }
 
-bot.hears(/counter/i, (ctx, next) => {
-    ctx.session.counter = ctx.session.counter || 1
-    ctx.session.counter = ctx.session.counter + 1
-    ctx.replyWithMarkdown(`Counter updated, new value: \`${ctx.session.counter}\``)
-    return next()
-})
 
 bot.hears(/dailytask/i, (ctx) => {
     listTasks()
