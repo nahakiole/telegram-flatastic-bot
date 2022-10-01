@@ -1,13 +1,16 @@
 {
   "name": "telegram-flatastic-bot",
-  "version": "0.0.2",
+  "version": "0.0.4",
   "description": "A telegram bot for flatastic",
   "main": "bot.js",
   "dependencies": {
+    "date-fns": "^2.21.3",
     "dotenv": "^8.2.0",
+    "imgflip": "^2.0.0",
     "node-cron": "^2.0.3",
     "nodemon": "^2.0.4",
     "request": "^2.88.2",
+    "simple-json-db": "^1.2.3",
     "telegraf": "^3.38.0",
     "telegraf-session-local": "^2.0.0"
   },

@@ -3,7 +3,7 @@
 A flatastic telegram bot that shows the tasks and things on the shopping list in a telegram chat.
 
 ## How to get started
-- Create .env file with a BOT_TOKEN, FLATASTIC_TOKEN and TELEGRAM_GROUP environment variable.
+- Create .env file with a BOT_TOKEN, FLATASTIC_TOKEN, TELEGRAM_GROUP, IMGFLIP_USER, IMGFLIP_PASSWORD environment variable.
 - Run ```node bot.js```
 
 ## Planned features:
