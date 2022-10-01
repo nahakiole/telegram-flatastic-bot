@@ -253,10 +253,8 @@ function showShoppingList() {
             }
             db.set("shoppingList", items.join(", "))
 
-            bot.telegram.unpinChatMessage(process.env.TELEGRAM_GROUP).then(function () {
-                bot.telegram.sendMessage(process.env.TELEGRAM_GROUP, output).then(function (message) {
-                    bot.telegram.pinChatMessage(process.env.TELEGRAM_GROUP, message.message_id)
-                })
+            bot.telegram.sendMessage(process.env.TELEGRAM_GROUP, output).then(function (message) {
+                bot.telegram.pinChatMessage(process.env.TELEGRAM_GROUP, message.message_id)
             })
         }
     })
